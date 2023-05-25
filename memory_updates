@@ -1,0 +1,41 @@
+class MemoryUpdates:
+    def __init__(self, personal_memories, collective_memory):
+        self.personal_memories = personal_memories
+        self.collective_memory = collective_memory
+
+    def update_personal_memory(self, participant, key, value):
+        if participant in self.personal_memories:
+            self.personal_memories[participant][key] = value
+        else:
+            self.personal_memories[participant] = {key: value}
+
+    def update_collective_memory(self, conversation):
+        self.collective_memory.append(conversation)
+
+    def get_personal_memory(self, participant):
+        return self.personal_memories.get(participant, {})
+
+    def get_collective_memory(self):
+        return self.collective_memory
+
+if __name__ == "__main__":
+    # Example usage
+    # Create memory updates instance
+    personal_memories = {"participant1": {"interest": "technology"}}
+    collective_memory = [("participant1", "participant2", "Hello!")]
+    memory_updates = MemoryUpdates(personal_memories, collective_memory)
+
+    # Update personal memory
+    memory_updates.update_personal_memory("participant2", "interest", "sports")
+
+    # Update collective memory
+    memory_updates.update_collective_memory(("participant2", "participant1", "Hi there!"))
+
+    # Retrieve memories
+    participant1_memory = memory_updates.get_personal_memory("participant1")
+    participant2_memory = memory_updates.get_personal_memory("participant2")
+    collective_memory = memory_updates.get_collective_memory()
+
+    print("Participant 1's memory:", participant1_memory)
+    print("Participant 2's memory:", participant2_memory)
+    print("Collective memory:", collective_memory)
